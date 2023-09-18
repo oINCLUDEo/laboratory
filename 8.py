@@ -20,24 +20,24 @@ class NumberAnalyzerGUI:
 
     def analyze(self):
         n = int(self.entry.get())
-        analyzer = NumberAnalyzer(n)
+        analyzer = Numbers(n)
         result = analyzer.analyze_numbers()
 
-        self.result_text.delete(1.0, tk.END)
+        self.result_text.delete(0.0, tk.END)
         for number in result:
-            self.result_text.insert(tk.END, f"{number}\n")
+            self.result_text.insert(0.0, f"{number}\n")
 
 
-class NumberAnalyzer:
+class Numbers:
     def __init__(self, n):
         self.n = n
-        self.is_odd_digit = lambda num: num % 10 % 2 == 1 and int(str(num)[0]) % 2 == 1
-        self.digit_sum_divisible_by_3 = lambda num: sum(map(int, str(num))) % 3 == 0
+        self.nechet = lambda num: num % 2 == 1 and int(str(num)[0]) % 2 == 1
+        self.divisible_3 = lambda num: sum(map(int, str(num))) % 3 == 0
 
     def analyze_numbers(self):
         result = []
         for i in range(1, self.n + 1):
-            if self.is_odd_digit(i) and self.digit_sum_divisible_by_3(i):
+            if self.nechet(i) and self.divisible_3(i):
                 result.append(i)
         return result
 
