@@ -41,7 +41,7 @@ class NumberAnalyzerGUI:
 
             self.result_text.delete(0.0, tk.END)
             for number in result:
-                self.result_text.insert(0.0, f"{number}\n")
+                self.result_text.insert(tk.END, f"{number}\n")
 
 
 class Numbers:
