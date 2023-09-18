@@ -9,7 +9,7 @@ class NumberAnalyzerGUI:
         self.root = root
         self.root.title("Анализ чисел")
 
-        self.label = tk.Label(root, text="Введите значение n:")
+        self.label = tk.Label(root, text="Введите значение n (не более 1000000):")
         self.label.pack()
 
         self.entry = tk.Entry(root)
@@ -21,9 +21,14 @@ class NumberAnalyzerGUI:
         self.result_text = tk.Text(root, height=10, width=30)
         self.result_text.pack()
 
+    def window_center(self, root):
+        x = str((root.winfo_screenwidth() - root.winfo_reqwidth()) // 2)
+        y = str((root.winfo_screenheight() - root.winfo_reqheight()) // 2)
+        root.wm_geometry("+" + x + "+" + y)
+
     def analyze(self):
         n = self.entry.get()
-        if not n.isdigit():
+        if not n.isdigit() or int(n) > 1000000:
             messagebox.showerror(title="Ошибка",
                                 message="Вы ввели некорректное число")
         elif int(n) < 3:
@@ -43,7 +48,7 @@ class Numbers:
     def __init__(self, n):
         self.n = n
         self.nechet = lambda num: num % 2 == 1 and int(str(num)[0]) % 2 == 1
-        self.divisible_3 = lambda num: sum(map(int, str(num))) % 3 == 0
+        self.divisible_3 = lambda num: num % 3 == 0
 
     def analyze_numbers(self):
         result = []
@@ -55,5 +60,5 @@ class Numbers:
 
 if __name__ == "__main__":
     root = tk.Tk()
-    app = NumberAnalyzerGUI(root)
+    app = NumberAnalyzerGUI(root).window_center(root)
     root.mainloop()
