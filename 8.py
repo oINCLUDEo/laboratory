@@ -1,6 +1,7 @@
 # Вариант 11. Вывести все натуральные числа до n, которые начинаются и заканчиваются нечетной цифрой.
 # Усложнение: Число также должно делиться на 3
 import tkinter as tk
+from tkinter import messagebox
 
 
 class NumberAnalyzerGUI:
@@ -21,13 +22,21 @@ class NumberAnalyzerGUI:
         self.result_text.pack()
 
     def analyze(self):
-        n = int(self.entry.get())
-        analyzer = Numbers(n)
-        result = analyzer.analyze_numbers()
+        n = self.entry.get()
+        if not n.isdigit():
+            messagebox.showerror(title="Ошибка",
+                                message="Вы ввели некорректное число")
+        elif int(n) < 3:
+            messagebox.showerror(title="Ошибка",
+                                 message="Нет подходящих чисел до " + n)
+        else:
+            n = int(n)
+            analyzer = Numbers(n)
+            result = analyzer.analyze_numbers()
 
-        self.result_text.delete(0.0, tk.END)
-        for number in result:
-            self.result_text.insert(0.0, f"{number}\n")
+            self.result_text.delete(0.0, tk.END)
+            for number in result:
+                self.result_text.insert(0.0, f"{number}\n")
 
 
 class Numbers:
