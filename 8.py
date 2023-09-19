@@ -4,7 +4,7 @@ import tkinter as tk
 from tkinter import messagebox
 
 
-class NumberAnalyzerGUI:
+class NumbersGUI:
     def __init__(self, root):
         self.root = root
         self.root.title("Анализ чисел")
@@ -18,7 +18,7 @@ class NumberAnalyzerGUI:
         self.analyze_button = tk.Button(root, text="Анализ", command=self.analyze)
         self.analyze_button.pack()
 
-        self.result_text = tk.Text(root, height=10, width=30)
+        self.result_text = tk.Text(root, height=10, width=30, state="disabled")
         self.result_text.pack()
 
     def window_center(self, root):
@@ -38,10 +38,12 @@ class NumberAnalyzerGUI:
             n = int(n)
             analyzer = Numbers(n)
             result = analyzer.analyze_numbers()
+            self.result_text.config(state="normal")
 
             self.result_text.delete(0.0, tk.END)
             for number in result:
                 self.result_text.insert(tk.END, f"{number}\n")
+            self.result_text.config(state="disabled")
 
 
 class Numbers:
@@ -60,5 +62,5 @@ class Numbers:
 
 if __name__ == "__main__":
     root = tk.Tk()
-    app = NumberAnalyzerGUI(root).window_center(root)
+    app = NumbersGUI(root).window_center(root)
     root.mainloop()
