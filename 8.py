@@ -22,9 +22,9 @@ class NumberAnalyzerGUI:
         self.result_text.pack()
 
     def window_center(self, root):
-        x = str((root.winfo_screenwidth() - root.winfo_reqwidth()) // 2)
-        y = str((root.winfo_screenheight() - root.winfo_reqheight()) // 2)
-        root.wm_geometry("+" + x + "+" + y)
+        x = (root.winfo_screenwidth() - root.winfo_reqwidth()) // 2
+        y = (root.winfo_screenheight() - root.winfo_reqheight()) // 2
+        root.geometry("+%d+%d" % (x, y))
 
     def analyze(self):
         n = self.entry.get()
