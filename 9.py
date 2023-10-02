@@ -14,7 +14,7 @@ def show_success_window():
 
 
 def close_all_windows():
-    root.destroy()  # Закрыть главное окно
+    root.destroy()
     new_empty_window = tk.Tk()
     new_empty_window.title("Пустое окно")
     new_empty_window.geometry("400x200")
