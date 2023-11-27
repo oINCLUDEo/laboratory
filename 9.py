@@ -54,7 +54,6 @@ def close_all_windows():
 def validate_password_strength():
     password = entry_password.get()
     strength = 0
-
     if len(password) >= 8:
         strength += 1
 
