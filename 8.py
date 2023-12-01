@@ -2,6 +2,7 @@
 # Усложнение: Число также должно делиться на 3
 import tkinter as tk
 from tkinter import messagebox
+from tkinter import Scrollbar
 
 
 class NumbersGUI:
@@ -19,6 +20,9 @@ class NumbersGUI:
         self.analyze_button.pack()
 
         self.result_text = tk.Text(root, height=10, width=30, state="disabled")
+        self.vertical_scrollbar = Scrollbar(root, command=self.result_text.yview)
+        self.vertical_scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+        self.result_text.config(yscrollcommand=self.vertical_scrollbar.set)
         self.result_text.pack()
 
     def window_center(self, root):
@@ -30,7 +34,7 @@ class NumbersGUI:
         n = self.entry.get()
         if not n.isdigit() or int(n) > 1000000:
             messagebox.showerror(title="Ошибка",
-                                message="Вы ввели некорректное число")
+                                 message="Вы ввели некорректное число")
         elif int(n) < 3:
             messagebox.showerror(title="Ошибка",
                                  message="Нет подходящих чисел до " + n)
