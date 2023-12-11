@@ -30,7 +30,6 @@ def minimax(board, depth, is_maximizing):
 
     if is_maximizing:
         best_score = -float('inf')  # -Бесконечность
-        print(best_score)
         for i in range(3):
             for j in range(3):
                 if board[i][j] == '':
@@ -77,10 +76,12 @@ def on_click(row, col):
         if check_winner(board, player):
             winner_label.config(text=f"Игрок {player} победил!")
             winner = True
+            restart_button.config(state='normal')
         # Если доска полная, то выводим сообщение о ничье
         elif is_board_full(board):
             winner_label.config(text="Ничья!")
             winner = True
+            restart_button.config(state='normal')
         # Передача хода компьютеру
         else:
             player = 'O'
@@ -95,13 +96,27 @@ def on_click(row, col):
                 if check_winner(board, player):
                     winner_label.config(text=f"Компьютер победил!")
                     winner = True
+                    restart_button.config(state='normal')
                 # Если доска полная, то выводим сообщение о ничье
                 elif is_board_full(board):
                     winner_label.config(text="Ничья!")
                     winner = True
+                    restart_button.config(state='normal')
                 # Передача хода игроку
                 else:
                     player = 'X'
+
+
+def restart_game():
+    global player, winner, board
+    player = 'X'
+    winner = False
+    # Обновление текста на кнопках и лейбле победителя
+    board = [['' for _ in range(3)] for _ in range(3)]
+    for i in range(3):
+        for j in range(3):
+            buttons[i][j].config(text='')
+    winner_label.config(text='')
 
 
 root = tk.Tk()
@@ -125,5 +140,10 @@ for i in range(3):
 # Строка вывода победителей
 winner_label = tk.Label(root, text='', font=('Arial', 20))
 winner_label.grid(row=3, column=0, columnspan=3)
+
+# Кнопка Рестарта
+restart_button = tk.Button(root, text='Начать заново', font=('Arial', 16), command=restart_game)
+restart_button.grid(row=4, column=0, columnspan=3)
+restart_button.config(state='disabled')
 # endregion
 root.mainloop()
