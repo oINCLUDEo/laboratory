@@ -117,10 +117,23 @@ def restart_game():
         for j in range(3):
             buttons[i][j].config(text='')
     winner_label.config(text='')
+    restart_button.config(state='disabled')
 
 
 root = tk.Tk()
 root.title("Крестики-нолики")
+# Определение размера окна
+window_width = 400
+window_height = 550
+
+# Расчет координат для размещения окна в центре экрана
+screen_width = root.winfo_screenwidth()
+screen_height = root.winfo_screenheight()
+x_position = (screen_width // 2) - (window_width // 2)
+y_position = (screen_height // 2) - (window_height // 2)
+
+# Установка окна по центру экрана
+root.geometry(f"{window_width}x{window_height}+{x_position}+{y_position}")
 
 player = 'X'
 winner = False
@@ -142,7 +155,7 @@ winner_label = tk.Label(root, text='', font=('Arial', 20))
 winner_label.grid(row=3, column=0, columnspan=3)
 
 # Кнопка Рестарта
-restart_button = tk.Button(root, text='Начать заново', font=('Arial', 16), command=restart_game)
+restart_button = tk.Button(root, text='Начать заново', font=('Arial', 16), fg='blue', command=restart_game)
 restart_button.grid(row=4, column=0, columnspan=3)
 restart_button.config(state='disabled')
 # endregion
