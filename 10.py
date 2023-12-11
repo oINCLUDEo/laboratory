@@ -33,9 +33,9 @@ def minimax(board, depth, is_maximizing):
         for i in range(3):
             for j in range(3):
                 if board[i][j] == '':
-                    board[i][j] = 'O'
+                    board[i][j] = 'O'  # В памяти делаем предполагаемый ход для дальнейшего дерева
                     score = minimax(board, depth + 1, False)
-                    board[i][j] = ''
+                    board[i][j] = ''  # Возвращаем действительные данные
                     best_score = max(score, best_score)  # Максимизация ведь ходит компьютер
         return best_score
     else:
@@ -43,9 +43,9 @@ def minimax(board, depth, is_maximizing):
         for i in range(3):
             for j in range(3):
                 if board[i][j] == '':
-                    board[i][j] = 'X'
+                    board[i][j] = 'X'  # В памяти делаем предполагаемый ход для дальнейшего дерева
                     score = minimax(board, depth + 1, True)  # Минимизация ведь ходит игрок
-                    board[i][j] = ''
+                    board[i][j] = ''  # Возвращаем действительные данные
                     best_score = min(score, best_score)
         return best_score
 
@@ -56,9 +56,9 @@ def find_best_move(board):
     for i in range(3):
         for j in range(3):
             if board[i][j] == '':
-                board[i][j] = 'O'
+                board[i][j] = 'O'  # В памяти делаем предполагаемый ход для дальнейшего дерева
                 score = minimax(board, 0, False)
-                board[i][j] = ''
+                board[i][j] = ''  # Возвращаем действительные данные
                 if score > best_score:
                     best_score = score
                     best_move = (i, j)
