@@ -100,10 +100,10 @@ else:
     matrix_E, matrix_B = matB, matE
 
 matF = matA.copy()
-pastemat(matF, matE, 0, 0)
-pastemat(matF, matB, fix_n, 0)
-pastemat(matF, matC, fix_n, fix_n)
-pastemat(matF, matD, 0, fix_n)
+pastemat(matF, matB, 0, 0)
+pastemat(matF, matC, fix_n, 0)
+pastemat(matF, matD, fix_n, fix_n)
+pastemat(matF, matE, 0, fix_n)
 
 print('Матрица F:')
 print_matrix(matF)
