@@ -1,6 +1,6 @@
 # 11.	Формируется матрица F следующим образом: если в С сумма чисел  в нечетных столбцах в области 2 больше,
 # чем произведение чисел в четных строках в области 1, то поменять в С симметрично области 2 и 3 местами, иначе Е и В
-# поменять местами несимметрично. При этом матрица А не меняется. После чего вычисляется выражение: A * F + K * F T.
+# поменять местами несимметрично. При этом матрица А не меняется. После чего вычисляется выражение: (К*A)*А– (K * AT).
 # Выводятся по мере формирования А, F и все матричные операции последовательно.
 
 import random
@@ -12,6 +12,8 @@ def print_matrix(mat):
         for elem in row:
             print('{:4}'.format(elem), end=' ')
         print()
+
+
 # endregion
 
 # region Функция копирование частей матрицы
@@ -23,6 +25,8 @@ def pastemat(matF, matrix, column_index, row_index):
             column_index += 1
         row_index += 1
         column_index = a
+
+
 # endregion
 
 # region Функция для получения частей матрицы
@@ -32,6 +36,8 @@ def matrix_input(mat, i1, i2, j1, j2):
         for j in range(j1, j2):
             zero_mat[i - i1][j - j1] = mat[i][j]
     return zero_mat
+
+
 # endregion
 
 # region Ввод K и N
@@ -91,7 +97,7 @@ for i in range(len(matC)):
                 summ += matC[i][j]
 
 print('Сумма чисел в нечетных слолбцах области 2:', summ)
-#endregion
+# endregion
 # region Перестановка областей в C или замена B и E
 if summ > comp:
     print('Сумма чисел  в нечетных столбцах в области 2 больше, чем произведение чисел в четных строках в области 1')
@@ -105,10 +111,10 @@ if summ > comp:
     print_matrix(matC)
 else:
     print('Сумма чисел  в нечетных столбцах в области 2 меньше, чем произведение чисел в четных строках в области 1')
-    matrix_E, matrix_B = matB, matE
+    matB, matE = matE, matB
 # endregion
 
-# region Создание матрицы A после манипуляций(копия частей)
+# region Создание матрицы F после манипуляций(копия частей)
 matF = matA.copy()
 pastemat(matF, matB, 0, 0)
 pastemat(matF, matC, fix_n, 0)
@@ -119,36 +125,41 @@ pastemat(matF, matE, 0, fix_n)
 print('Матрица F:')
 print_matrix(matF)
 
-matFt = [[0 for i in range(n)] for j in range(n)]
+matAt = [[0 for i in range(n)] for j in range(n)]
 
 # region Вычисления
-print("Матрица F транспонированая:")
+print("Матрица A транспонированая:")
 for i in range(n):
     for j in range(n):
-        matFt[i][j] = matF[j][i] # Просто меняем строки и столбцы
-print_matrix(matFt)
+        matAt[i][j] = matA[j][i]  # Просто меняем строки и столбцы
+print_matrix(matAt)
 
-print('Вычисляем A * F + K * F T:')
+print('Вычисляем (К*A)*А– (K * AT):')
 
-matAF = [[0 for i in range(n)] for j in range(n)]
-matTF = matFt.copy()
+matAK = [[0 for i in range(n)] for j in range(n)]
+for i in range(n):
+    for j in range(n):
+        matAK[i][j] += matA[i][j] * K
+
+matAKA = [[0 for i in range(n)] for j in range(n)]
 for i in range(n):
     for j in range(n):
         for k in range(n):
-            matAF[i][j] += matA[i][k] * matF[k][j]
-print('Результат A * F:')
-print_matrix(matAF)
+            matAKA[i][j] += matA[i][k] * matA[k][j]
+print('Результат (K * A) * A:')
+print_matrix(matAKA)
 
+matAtK = matAt.copy()
 for i in range(n):
     for j in range(n):
-        matTF[i][j] *= K
+        matAtK[i][j] *= K
 
-print('Результат K * F:')
-print_matrix(matTF)
+print('Результат K * A t:')
+print_matrix(matAtK)
 matres = [[0 for i in range(n)] for j in range(n)]
 for i in range(n):
     for j in range(n):
-        matres[i][j] = matAF[i][j] + matTF[i][j]
+        matres[i][j] = matAKA[i][j] - matAtK[i][j]
 print('Результат:')
 print_matrix(matres)
 # endregion
