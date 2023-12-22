@@ -145,7 +145,7 @@ matAKA = [[0 for i in range(n)] for j in range(n)]
 for i in range(n):
     for j in range(n):
         for k in range(n):
-            matAKA[i][j] += matA[i][k] * matA[k][j]
+            matAKA[i][j] += matA[i][k] * matA[k][j]  # Умножение матриц
 print('Результат (K * A) * A:')
 print_matrix(matAKA)
 
