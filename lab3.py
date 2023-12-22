@@ -6,13 +6,15 @@
 import random
 
 
+# region Вывод матрицы
 def print_matrix(mat):
     for row in mat:
         for elem in row:
             print('{:4}'.format(elem), end=' ')
         print()
+# endregion
 
-
+# region Функция копирование частей матрицы
 def pastemat(matF, matrix, column_index, row_index):
     a = column_index
     for row in matrix:
@@ -21,20 +23,18 @@ def pastemat(matF, matrix, column_index, row_index):
             column_index += 1
         row_index += 1
         column_index = a
+# endregion
 
-
-def matzero(size):
-    return [[0 for i in range(size)] for j in range(size)]
-
-
+# region Функция для получения частей матрицы
 def matrix_input(mat, i1, i2, j1, j2):
-    zero_mat = matzero(len(mat) // 2)
+    zero_mat = [[0 for i in range(len(mat) // 2)] for j in range(len(mat) // 2)]
     for i in range(i1, i2):
         for j in range(j1, j2):
             zero_mat[i - i1][j - j1] = mat[i][j]
     return zero_mat
+# endregion
 
-
+# region Ввод K и N
 try:
     K = int(input('Введите число K: '))
     n = int(input('Введите число число N, больше или равное 5: '))
@@ -43,22 +43,27 @@ try:
 except ValueError:
     print('Введенный символ не является числом.')
     exit(0)
+# endregion
 
+# region Заполнение матрицы A от -10 до 10 и ее вывод
 matA = [[random.randint(-10, 10) for i in range(n)] for j in range(n)]
 
 print('Матрица А изначальная:')
 print_matrix(matA)
+# endregion
 
+# region Операции с n
 half_n = n // 2
 fix_n = half_n
 if n % 2 != 0:
     fix_n += 1
+# endregion
 
+# region Разделение A на подматрицы и вывод
 matC = matrix_input(matA, 0, half_n, fix_n, n)
 matE = matrix_input(matA, fix_n, n, fix_n, n)
 matD = matrix_input(matA, fix_n, n, 0, half_n)
 matB = matrix_input(matA, 0, half_n, 0, half_n)
-
 print('Подматрицы матрицы A:')
 print('Подматрица B')
 print_matrix(matB)
@@ -68,7 +73,9 @@ print('Подматрица D')
 print_matrix(matD)
 print('Подматрица E')
 print_matrix(matE)
+# endregion
 
+# region Проверка областей в C
 comp, summ = 1, 0
 for i in range(len(matC)):
     for j in range(len(matC)):
@@ -84,7 +91,8 @@ for i in range(len(matC)):
                 summ += matC[i][j]
 
 print('Сумма чисел в нечетных слолбцах области 2:', summ)
-
+#endregion
+# region Перестановка областей в C или замена B и E
 if summ > comp:
     print('Сумма чисел  в нечетных столбцах в области 2 больше, чем произведение чисел в четных строках в области 1')
     print('Начальная подматрциа C:')
@@ -98,18 +106,22 @@ if summ > comp:
 else:
     print('Сумма чисел  в нечетных столбцах в области 2 меньше, чем произведение чисел в четных строках в области 1')
     matrix_E, matrix_B = matB, matE
+# endregion
 
+# region Создание матрицы A после манипуляций(копия частей)
 matF = matA.copy()
 pastemat(matF, matB, 0, 0)
 pastemat(matF, matC, fix_n, 0)
 pastemat(matF, matD, fix_n, fix_n)
 pastemat(matF, matE, 0, fix_n)
+# endregion
 
 print('Матрица F:')
 print_matrix(matF)
 
-matFt = matzero(n)
+matFt = [[0 for i in range(n)] for j in range(n)]
 
+# region Вычисления
 print("Матрица F транспонированая:")
 for i in range(n):
     for j in range(n):
@@ -118,7 +130,7 @@ print_matrix(matFt)
 
 print('Вычисляем A * F + K * F T:')
 
-matAF = matzero(n)
+matAF = [[0 for i in range(n)] for j in range(n)]
 matTF = matFt.copy()
 for i in range(n):
     for j in range(n):
@@ -133,9 +145,10 @@ for i in range(n):
 
 print('Результат K * F:')
 print_matrix(matTF)
-matres = matzero(n)
+matres = [[0 for i in range(n)] for j in range(n)]
 for i in range(n):
     for j in range(n):
         matres[i][j] = matAF[i][j] + matTF[i][j]
 print('Результат:')
 print_matrix(matres)
+# endregion
