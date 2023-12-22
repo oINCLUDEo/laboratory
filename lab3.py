@@ -125,7 +125,7 @@ matFt = [[0 for i in range(n)] for j in range(n)]
 print("Матрица F транспонированая:")
 for i in range(n):
     for j in range(n):
-        matFt[i][j] = matF[j][i]
+        matFt[i][j] = matF[j][i] # Просто меняем строки и столбцы
 print_matrix(matFt)
 
 print('Вычисляем A * F + K * F T:')
